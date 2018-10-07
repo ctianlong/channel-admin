@@ -3,5 +3,5 @@
     <include resource="org/springframework/boot/logging/logback/base.xml" />
     <logger name="org.springframework.web" level="INFO"/>
     <logger name="org.springframework.security" level="INFO"/>
-    <logger name="tk.mybatis.springboot.mapper" level="INFO"/>
+    <logger name="com.channel.mapper" level="INFO"/>
 </configuration>

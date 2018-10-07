@@ -36,7 +36,7 @@
 <script sec:authorize="isAuthenticated()" th:inline="javascript">
 /*<![CDATA[*/
 	var loginUserId = /*[[${#authentication.principal.id}]]*/ '';
-	var isSuperuser = /*[[${#authorization.expression('hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)')}]]*/ false;
+	var isSuperuser = /*[[${#authorization.expression('hasRole(T(com.channel.security.RoleConstants).ADMIN)')}]]*/ false;
 /*]]>*/
 </script>
 <script th:inline="javascript">

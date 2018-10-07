@@ -20,8 +20,8 @@
                     <!--<h2><i class="fa fa-road"></i> <span th:text="#{system.name}"></span></h2>-->
                     <p style="max-width:1024px;"><span th:text="#{system.description}"></span></p>
                     <!--<p>
-                        <a sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)" href="javascript:;" class="king-btn king-danger king-btn-large" role="button"><span th:text="#{system.welcome}"></span> &raquo; <span th:text="#{system.superuser}"></span></a>
-                        <a sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).USER)" href="javascript:;" class="king-btn king-success king-btn-large" role="button"><span th:text="#{system.welcome}"></span> &raquo;</a>
+                        <a sec:authorize="hasRole(T(RoleConstants).ADMIN)" href="javascript:;" class="king-btn king-danger king-btn-large" role="button"><span th:text="#{system.welcome}"></span> &raquo; <span th:text="#{system.superuser}"></span></a>
+                        <a sec:authorize="hasRole(T(RoleConstants).USER)" href="javascript:;" class="king-btn king-success king-btn-large" role="button"><span th:text="#{system.welcome}"></span> &raquo;</a>
                     </p>-->
                 </div>
 
