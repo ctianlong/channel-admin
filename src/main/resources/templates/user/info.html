@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{system.user.info-center}"></title>
+<div th:replace="common/head"></div>
+</head>
+<body>
+	<div id="wrapper">
+		<div th:replace="common/navigation"></div>
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<!-- Page Heading -->
+				<div class="row page-header-box">
+					<div class="col-lg-12">
+						<h1 class="page-header" th:text="#{system.user.info-center}"></h1>
+					</div>
+				</div>
+				<div th:if="${param.register}" class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong><span th:text="#{system.completeinfo}"></span></strong>
+                </div>
+				<!-- /.row -->
+				<div class="row">
+				    <div class="col-md-3">
+					    <div class="panel king-panel1">
+		                    <div class="panel-heading king-panel-head1 king-panel-top3">
+		                        <a href="javascript:void;" class="pull-left profile">
+                                    <img alt="" src="https://magicbox.bkclouds.cc/static_api/v3/components/widget4/images/avatar.png" class="img-circle img80_80">
+                                </a>
+		                        <h3 id="chnameLeftPanel" class="text-center"></h3>
+		                        <p id="usernameLeftPanel" class="text-muted text-center"></p>
+		                        <hr class="mt5 mb15">
+		                        <button class="king-btn king-info king-radius" id="btn-edit-userinfo"><i class="fa fa-edit"></i> <span th:text="#{system.edituserinfo}"></span></button> 
+		                    </div>
+		                    <!-- 
+		                    <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="badge badge-warning">1</span>
+                                    <i class="fa fa-comments-o"></i> -
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">14</span>
+                                    <i class="fa fa-envelope-o"></i> 新增邮件
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge badge-info">1</span>
+                                    <i class="fa fa-heart-o"></i> 错误消息
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge badge-success">3</span>
+                                    <i class="fa fa-folder-open-o"></i> 告警消息
+                                </li>
+                            </ul>
+		                     -->
+		                </div>
+				    </div>
+				    <div class="col-md-9">
+					    <div class="tab-box" id="myTab" >
+		                    <ul class="nav nav-tabs king-nav-tabs2 king-tab-primary">
+		                        <li class="active"><a href="#tab1" data-toggle="tab"><span th:text="#{system.user.info-center}"></span></a>
+		                        </li>
+		                        <li><a href="#tab2" data-toggle="tab"><span th:text="#{system.modifypassword}"></span></a></li>
+		                    </ul>
+		                    <div class="tab-content">
+		                        <div class="tab-pane fade in active" id="tab1" style="padding:15px;">
+		                            <form class="form-horizontal">
+									  <div class="form-group">
+									    <label class="col-sm-2 control-label"><span th:text="#{system.username}"></span>：</label>
+									    <div class="col-sm-10">
+									      <p class="form-control-static" id="username1"></p>
+									    </div>
+									  </div>
+									  <div class="form-group">
+									    <label class="col-sm-2 control-label"><span th:text="#{system.fullname}"></span>：</label>
+									    <div class="col-sm-10">
+									      <p class="form-control-static" id="chname1"></p>
+									    </div>
+									  </div>
+									  <div class="form-group">
+									    <label class="col-sm-2 control-label"><span th:text="#{system.phone}"></span>：</label>
+									    <div class="col-sm-10">
+									      <p class="form-control-static" id="phone1"></p>
+									    </div>
+									  </div>
+									  <div class="form-group">
+									    <label class="col-sm-2 control-label"><span th:text="#{system.company}"></span>：</label>
+									    <div class="col-sm-10">
+									      <p class="form-control-static" id="company1"></p>
+									    </div>
+									  </div>
+									  <div class="form-group">
+									    <label class="col-sm-2 control-label"><span th:text="#{system.address}"></span>：</label>
+									    <div class="col-sm-10">
+									      <p class="form-control-static" id="address1"></p>
+									    </div>
+									  </div>
+									</form>
+								</div>
+		                        <div class="tab-pane fade" id="tab2" style="padding:15px;">
+		                            <form id="form-password" class="form-horizontal">
+									  <div class="form-group">
+									    <label for="oldPassword" class="col-sm-2 control-label"><span th:text="#{system.oldpassword}"></span>：</label>
+									    <div class="col-sm-4">
+									      <input type="password" class="form-control" name="oldPassword" id="oldPassword" th:placeholder="#{system.oldpassword}">
+									    </div>
+									  </div>
+									  <div class="form-group">
+									    <label for="newPassword" class="col-sm-2 control-label"><span th:text="#{system.newpassword}"></span>：</label>
+									    <div class="col-sm-4">
+									      <input type="password" class="form-control" name="newPassword" id="newPassword" th:placeholder="#{system.newpassword}">
+									    </div>
+									  </div>
+									  <div class="form-group">
+									  <label for="newPassword_confirm" class="col-sm-2 control-label"><span th:text="#{system.confirmpass}"></span>：</label>
+                                        <div class="col-sm-4">
+                                          <input type="password" class="form-control" name="newPassword_confirm" id="newPassword_confirm" th:placeholder="#{system.confirmpass}">
+                                        </div>
+									  </div>
+									  <div class="form-group">
+									    <div class="col-sm-offset-2 col-sm-10 mt10">
+									      <button type="submit" class="king-btn king-info king-radius"><span th:text="#{system.modify}"></span></button>
+									    </div>
+									  </div>
+									</form>
+		                        </div>
+		                    </div>
+		                </div>
+				    </div>
+				</div>
+                
+			</div>
+			<!-- /.container-fluid -->
+
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+	
+	<!-- 用户modal -->
+    <div class="modal fade" data-backdrop="static" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius:5px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel" th:text="#{system.edituserinfo}"></h4>
+          </div>
+          <form id="form-userInfo" class="form-horizontal">
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" th:title="#{system.required}"><span class="king-required-tip text-danger mr5">*</span><span th:text="#{system.username}"></span>：</label>
+                            <div class="col-md-6">
+                                <input type="text" name="username" class="form-control" id="username" th:placeholder="#{system.username}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" th:title="#{system.required}"><span class="king-required-tip text-danger mr5">*</span><span th:text="#{system.fullname}"></span>：</label>
+                            <div class="col-md-6">
+                               <input type="text" name="chname" class="form-control" id="chname" th:placeholder="#{system.fullname}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span th:text="#{system.phone}"></span>：</label>
+                            <div class="col-md-6">
+                               <input type="text" name="phone" class="form-control" id="phone" placeholder="#{system.telephone}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span th:text="#{system.company}"></span>：</label>
+                            <div class="col-md-6">
+                               <input type="text" name="company" class="form-control" id="company" th:placeholder="#{system.company}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span th:text="#{system.address}"></span>：</label>
+                            <div class="col-md-6">
+                               <input type="text" name="address" class="form-control" id="address" th:placeholder="#{system.address}"/>
+                            </div>
+                        </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="king-btn king-radius king-primary"><span th:text="#{system.save}"></span></button>
+            <button type="button" class="king-btn king-radius king-default" data-dismiss="modal"><span th:text="#{system.cancel}"></span></button>
+          </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+	<div th:replace="common/script"></div>
+	<!-- 用户个人信息js -->
+    <script th:src="@{/js/user-info.js}"></script>
+	
+</body>
+</html>

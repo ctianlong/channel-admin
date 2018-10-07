@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>推广数据汇总</title>
+    <div th:replace="common/head"></div>
+</head>
+<body>
+    <div id="wrapper">
+        <div th:replace="common/navigation"></div>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row page-header-box">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">推广数据汇总</h1>
+                    </div>
+                </div>
+
+                <div class="jumbotron" style="background:#3C8FD5;color:white;padding:30px 40px;">
+                    <!--<h2><i class="fa fa-road"></i> <span th:text="#{system.name}"></span></h2>-->
+                    <p style="max-width:1024px;"><span th:text="#{system.description}"></span></p>
+                    <!--<p>
+                        <a sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)" href="javascript:;" class="king-btn king-danger king-btn-large" role="button"><span th:text="#{system.welcome}"></span> &raquo; <span th:text="#{system.superuser}"></span></a>
+                        <a sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).USER)" href="javascript:;" class="king-btn king-success king-btn-large" role="button"><span th:text="#{system.welcome}"></span> &raquo;</a>
+                    </p>-->
+                </div>
+
+                <!--<div class="row mb20">
+                    <div class="col-md-3">
+                        <div class="king-panel-item clearfix king-panel-success">
+                            <div class="king-panel-left">
+                                <i class="fa fa-jpy f30"></i>
+                            </div>
+                            <div class="king-panel-right">
+                                <span class="king-counter-number f24">2000<small class="f14">元</small></span>
+                                <div class="king-counter-label mt5">总消费</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="king-panel-item clearfix king-panel-info">
+                            <div class="king-panel-left">
+                                <i class="fa fa-mouse-pointer f30"></i>
+                            </div>
+                            <div class="king-panel-right">
+                                <span class="king-counter-number f24">542<small class="f14">次</small></span>
+                                <div class="king-counter-label mt5">总点击</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="king-panel-item clearfix king-panel-danger">
+                            <div class="king-panel-left">
+                                <i class="fa fa-eye f30"></i>
+                            </div>
+                            <div class="king-panel-right">
+                                <span class="king-counter-number f24">3000<small class="f14">次</small></span>
+                                <div class="king-counter-label mt5">总展现</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="row mb20">
+                    <div class="col-sm-4">
+                        <div class="king-widget1">
+                            <div class="clearfix">
+                                <div class="icon-wrap">
+                    <span class="fa-stack king-bg-info">
+                        <i class="fa fa-jpy fa-stack-1x fa-inverse"></i>
+                    </span>
+                                </div>
+                                <div class="text-wrap pull-right">
+                                    <h3><span id="totalConsume"></span><small class="f14">元</small></h3>
+                                    <p class="pull-right">总消费</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="king-widget1">
+                            <div class="clearfix">
+                                <div class="icon-wrap">
+                    <span class="fa-stack king-bg-danger">
+                        <i class="fa fa-hand-pointer-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                                </div>
+                                <div class="text-wrap pull-right">
+                                    <h3><span id="totalClick"></span><small class="f14">次</small></h3>
+                                    <p class="pull-right">总点击</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="king-widget1">
+                            <div class="clearfix">
+                                <div class="icon-wrap">
+                    <span class="fa-stack king-bg-success">
+                        <i class="fa fa-eye fa-stack-1x fa-inverse"></i>
+                    </span>
+                                </div>
+                                <div class="text-wrap pull-right">
+                                    <h3><span id="totalDisplay"></span><small class="f14">次</small></h3>
+                                    <p class="pull-right">总展示</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel king-panel1">
+                    <div class="panel-heading king-panel-head1 king-panel-top3" role="tab" id="headingOne">
+                        <div class="king-panel-control">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="fa fa-minus-square-o fa-lg"></a>
+                        </div>
+                        <h3 class="panel-title">数据趋势查询条件</h3>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class='panel-body'>
+                            <form role="form" id="form-datatrend-query">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">渠道</div>
+                                                <select id="channelIdQuery" class="form-control" style="width: 100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">日期范围</div>
+                                                <select id="days" class="form-control" style="width: 100%">
+                                                    <option value="7" selected="selected">近7天</option>
+                                                    <option value="14">近14天</option>
+                                                    <option value="30">近30天</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <button type="submit" class="king-btn king-info king-radius"><i class="fa fa-search"></i> <span th:text="#{system.query}"></span></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row charts">
+                    <div class="col-md-6">
+                        <div class="king-block king-block-bordered mb30">
+                            <div class="king-block-header">
+                                <h3 class="king-block-title">报名趋势</h3>
+                            </div>
+                            <div class="king-block-content">
+                                <div class="chart" id="chartA"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="king-block king-block-bordered mb30">
+                            <div class="king-block-header">
+                                <h3 class="king-block-title">展示趋势</h3>
+                            </div>
+                            <div class="king-block-content">
+                                <div class="chart" id="chartB"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="king-block king-block-bordered mb30">
+                            <div class="king-block-header">
+                                <h3 class="king-block-title">点击趋势</h3>
+                            </div>
+                            <div class="king-block-content">
+                                <div class="chart" id="chartC"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="king-block king-block-bordered mb30">
+                            <div class="king-block-header">
+                                <h3 class="king-block-title">消费趋势</h3>
+                            </div>
+                            <div class="king-block-content">
+                                <div class="chart" id="chartD"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--<div class="row data-panel">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="king-widget2">
+                            <div class="king-widget-content p20 bg-info">
+                                <div class="king-counter king-counter-lg">
+                                    <div class="king-counter-label text-uppercase f16">we have</div>
+                                    <div class="king-counter-number-group">
+                                        <span class="king-counter-number white">260</span>
+                                        <span class="king-counter-icon ml10 white">
+                                            <i class="fa fa-image"></i>
+                                        </span>
+                                    </div>
+                                    <div class="king-counter-label text-uppercase f16">followers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="king-widget2">
+                            <div class="king-widget-content p20 bg-info">
+                                <div class="king-counter king-counter-lg">
+                                    <div class="king-counter-label text-uppercase f16">we have</div>
+                                    <div class="king-counter-number-group">
+                                        <span class="king-counter-number white">300</span>
+                                        <span class="king-counter-icon ml10 white">
+                                            <i class="fa fa-music"></i>
+                                        </span>
+                                    </div>
+                                    <div class="king-counter-label text-uppercase f16">followers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="king-widget2">
+                            <div class="king-widget-content p20 bg-info">
+                                <div class="king-counter king-counter-lg">
+                                    <div class="king-counter-label text-uppercase f16">we have</div>
+                                    <div class="king-counter-number-group">
+                                        <span class="king-counter-number white">110</span>
+                                        <span class="king-counter-icon ml10 white">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    </div>
+                                    <div class="king-counter-label text-uppercase f16">followers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="king-widget2">
+                            <div class="king-widget-content p20 bg-info">
+                                <div class="king-counter king-counter-lg">
+                                    <div class="king-counter-label text-uppercase f16">we have</div>
+                                    <div class="king-counter-number-group">
+                                        <span class="king-counter-number white">50</span>
+                                        <span class="king-counter-number-related white">+</span>
+                                    </div>
+                                    <div class="king-counter-label text-uppercase f16">followers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+	<div th:replace="common/script"></div>
+    <script th:src="@{/js/datasum.js}"></script>
+</body>
+
+</html>

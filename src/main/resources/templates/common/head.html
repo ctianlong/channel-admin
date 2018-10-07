@@ -1,0 +1,85 @@
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta id="csrf_token" th:content="${_csrf}?${_csrf.token}"/>
+<!-- Bootstrap css -->
+<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="https://cdn.bootcss.com/iCheck/1.0.2/skins/square/blue.css" rel="stylesheet">
+<!-- font-awesome，改成本地 -->
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+<!-- dataTables -->
+<link href="https://cdn.bootcss.com/datatables/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<!-- select2 -->
+<link href="https://cdn.bootcss.com/select2/4.0.4/css/select2.min.css" rel="stylesheet">
+<!-- nprogress -->
+<link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+<!-- Animate.css -->
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+<!-- 当前项目样式文件 -->
+<link th:href="@{/css/sb-admin.css}" rel="stylesheet">
+<link th:href="@{/css/sb-bk-theme.css}" rel="stylesheet">
+<!--公用样式库 -->
+<link th:href="@{/css/tx/static_api/v3/bk/css/bk.css}" rel="stylesheet"/>
+<style type="text/css">
+/* 对公共样式库的修改，修改默认Tab选项卡样式 */
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+}
+.king-nav-tabs2 {
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.king-nav-tabs2>li>a {
+    border: none;
+    margin-right: 0;
+    background: #fff;
+    color: #645F63;
+}
+.king-tab-primary.king-nav-tabs2>li.active>a {
+    margin-top: -1px;
+    border-top: 3px solid #5c90d2 !important;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+/* 去掉默认面板头大写转换 */
+.panel .panel-heading {
+    text-transform: none;
+}
+/* 二级菜单active类回显效果 */
+.navbar-inverse .navbar-nav .active > a {
+    color: #fff;
+    background-color: #162127;
+}
+legend {
+    font-size: 14px;
+}
+/* 覆盖bk.css，使输入框带圆角 */
+.form-control {
+    border-radius: 4px;
+    font-size: 12px;
+    height: 28px;
+    padding: 5px;
+}
+/* 超长文字省略号显示 */
+.ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+/* 日期选择插件修改，去掉两行 */
+.input-daterange .input-group-addon {
+    width: auto;
+    min-width: 16px;
+    padding: 4px 5px;
+    line-height: 1;
+    border-width: 1px;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+</style>

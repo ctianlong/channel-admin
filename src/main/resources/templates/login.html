@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="#{system.login}"></title>
+    <meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta id="csrf_token" th:content="${_csrf}?${_csrf.token}"/>
+	<!-- Bootstrap css -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<!-- font-awesome -->
+	<link href="https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- nprogress -->
+	<link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+	<!-- Animate.css -->
+	<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link th:href="@{/css/custom.min.css}" rel="stylesheet">
+  </head>
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+      <div class="login_wrapper">
+        <div class="animated form login_form">
+          <section class="login_content">
+            <form id="form-login">
+              <h1 th:text="#{system.login}"></h1>
+              <div></div>
+              <div>
+                <input type="text" class="form-control" name="username" th:placeholder="#{system.username}"/>
+              </div>
+              <div></div>
+              <div>
+                <input type="password" class="form-control" name="password" th:placeholder="#{system.password}"/>
+              </div>
+              <p id="loginMsg" class="text-danger"></p>
+              <div>
+                <button type="submit" class="btn btn-default submit"><span th:text="#{system.login}"></span></button>
+                <!--<a class="reset_pass" href="#">忘记密码？</a>-->
+              </div>
+              <div class="clearfix"></div>
+              <div class="separator">
+                <!--<p class="change_link"><span th:text="#{system.newuser}"></span>?&nbsp;
+                  <a href="#signup" class="to_register"> <b><span th:text="#{system.register}"></span></b></a>
+                </p>
+                <div th:unless="#{system.lang.code} == 'zh_CN' or #{system.lang.code} == null" class="clearfix">
+	                <a href="javascript:void(0);" onclick="changeLanguage('zh_CN')">简体中文</a>
+                </div>
+                <div th:unless="#{system.lang.code} == 'en_US'" class="clearfix">
+                    <a href="javascript:void(0);" onclick="changeLanguage('en_US')">English</a>
+                </div>
+                <div class="clearfix">
+	                <a href="javascript:void(0);" onclick="">更多语言</a>
+                </div>
+                <br />-->
+                <div>
+                  <h1><i class="fa fa-road"></i> <span th:text="#{system.name}"></span></h1>
+                  <p th:text="#{system.description}"></p>
+                  <p>©2018 All Rights Reserved.</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <!--<div id="register" class="animated form registration_form">
+          <section class="login_content">
+            <form id="form-register">
+              <h1 th:text="#{system.register}"></h1>
+              <div></div>
+              <div>
+                <input type="text" class="form-control" name="username" id="username" th:placeholder="#{system.username}"/>
+              </div>
+              <div></div>
+              <div>
+                <input type="text" class="form-control" name="chname" id="chname" th:placeholder="#{system.fullname}"/>
+              </div>
+              <div></div>
+              <div>
+                <input type="password" class="form-control" name="password" id="password" th:placeholder="#{system.password}"/>
+              </div>
+              <div></div>
+              <div>
+                <input type="password" class="form-control" name="password_confirm" id="password_confirm" th:placeholder="#{system.confirmpass}"/>
+              </div>
+              <p id="registerMsg" class="text-danger"></p>
+              <div>
+                <button type="submit" class="btn btn-default submit"><span th:text="#{system.register}"></span></button>
+              </div>
+              <div class="clearfix"></div>
+              <div class="separator">
+                <p class="change_link"><span th:text="#{system.olduser}"></span>?&nbsp;
+                  <a href="#signin" class="to_register"> <b><span th:text="#{system.login}"></span></b></a>
+                </p>
+                <div th:unless="#{system.lang.code} == 'zh_CN' or #{system.lang.code} == null" class="clearfix">
+                    <a href="javascript:void(0);" onclick="changeLanguage('zh_CN')">简体中文</a>
+                </div>
+                <div th:unless="#{system.lang.code} == 'en_US'" class="clearfix">
+                    <a href="javascript:void(0);" onclick="changeLanguage('en_US')">English</a>
+                </div>
+                <div class="clearfix">
+                    <a href="javascript:void(0);" onclick="">更多语言</a>
+                </div>
+                <br/>
+                <div>
+                  <h1><i class="fa fa-road"></i> <span th:text="#{system.name}"></span></h1>
+                  <p th:text="#{system.description}"></p>
+                  <p>©2017 All Rights Reserved.</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>-->
+
+      </div>
+    </div>
+    <!-- jQuery -->
+	<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+	<!-- bootstrap　-->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<!-- jquery.serializejson -->
+	<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+	<!-- jquery validation -->
+	<script src="https://cdn.bootcss.com/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+	<!-- nprogress -->
+	<script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+	<!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+	<!--[if lt IE 9]>
+	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<!-- i18n control -->
+	<script th:if="#{system.lang.code} == 'zh_CN' or #{system.lang.code} == null" th:src="@{/js/i18n/messages_zh_CN.js}"></script>
+	<script th:if="#{system.lang.code} == 'zh_CN' or #{system.lang.code} == null" src="https://cdn.bootcss.com/jquery-validate/1.14.0/localization/messages_zh.min.js"></script>
+	<script th:if="#{system.lang.code} == 'en_US'" th:src="@{/js/i18n/messages_en_US.js}"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	    var ctxPath = /*[[${#httpServletRequest.getContextPath()}]]*/ '';
+	/*]]>*/
+	</script>
+	<script>
+	    $.ajaxSetup({headers:{'X-CSRF-TOKEN':$("#csrf_token").attr("content")}});
+	    // 用户名正则验证
+	    jQuery.validator.addMethod("usernameRegex", function(value, element, param) {
+	        var reg = /^[_A-Za-z][_A-Za-z0-9]*$/;
+	        return this.optional(element) || (reg.test(value));
+	    }, iMsg.usernameRegFailMsg);
+	    // 首尾不含空格验证
+	    jQuery.validator.addMethod("notFirstLastSpace", function(value, element, param) {
+	        var reg = /(^\S.*\S$)|(^\S$)/;
+	        return this.optional(element) || (reg.test(value));
+	    }, iMsg.notFirLasSpaceMsg);
+	    NProgress.configure({
+	    	minimum: 0.2,
+	    	showSpinner: false
+	    });
+	</script>
+    <script th:src="@{/js/login.js}"></script>
+  </body>
+</html>

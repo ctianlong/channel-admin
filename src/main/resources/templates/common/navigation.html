@@ -1,0 +1,93 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="fa fa-road f20 mr5"> <span th:text="#{system.name}"></span></i>
+        </a>
+    </div>
+    <!-- Top Menu Items -->
+    <ul class="nav navbar-right top-nav">
+        <!--<li class="dropdown">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-language"></i> <span th:text="#{system.lang.name}"></span> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="javascript:void(0);" onclick="changeLanguage('zh_CN')">简体中文</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" onclick="changeLanguage('en_US')">English</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" onclick="">更多语言</a>
+                </li>
+            </ul>
+        </li>-->
+        <li class="dropdown">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span id="chnameNav" sec:authentication="principal.chname"></span> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a th:href="@{/user}"><span class="ellipsis" style="display: inline-block;max-width: 160px;"><i class="fa fa-fw fa-user"></i> <span th:text="#{system.user.info-center}"></span></span></a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a id="link-logout" href="javascript:void(0);"><i class="fa fa-fw fa-power-off"></i> <span th:text="#{system.logout}"></span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav side-nav" th:with="relativePath=${#httpServletRequest.getServletPath()}">
+
+            <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#home-ul"><span><i class="fa fa-fw fa-dashboard"></i> <span>首页</span></span><i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="home-ul" class="collapse" th:classappend="${#strings.startsWith(relativePath,'/home')} ? 'in'">
+                    <li th:class="${#strings.startsWith(relativePath,'/home/datasum')} ? 'active'">
+                        <a th:href="@{/home/datasum}"><i class="fa fa-fw fa-circle-o"></i> <span>推广数据汇总</span></a>
+                    </li>
+                    <li th:class="${#strings.startsWith(relativePath,'/home/datacenter')} ? 'active'">
+                        <a th:href="@{/home/datacenter}"><i class="fa fa-fw fa-circle-o"></i> <span>数据中心</span></a>
+                    </li>
+                    <li th:class="${#strings.startsWith(relativePath,'/home/download')} ? 'active'">
+                        <a th:href="@{/home/download}"><i class="fa fa-fw fa-circle-o"></i> <span>数据下载</span></a>
+                    </li>
+                    <li th:class="${#strings.startsWith(relativePath,'/home/document')} ? 'active'">
+                        <a th:href="@{/home/document}"><i class="fa fa-fw fa-circle-o"></i> <span>接口文档</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)">
+                <a href="javascript:;" data-toggle="collapse" data-target="#channel-ul"><span><i class="fa fa-fw fa-wrench"></i> <span>渠道管理</span></span><i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="channel-ul" class="collapse" th:classappend="${#strings.startsWith(relativePath,'/channel')} ? 'in'">
+                    <li th:class="${#strings.startsWith(relativePath,'/channel/list')} ? 'active'">
+                        <a th:href="@{/channel/list}"><i class="fa fa-fw fa-circle-o"></i> <span>管理渠道</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)">
+                <a href="javascript:;" data-toggle="collapse" data-target="#statistics-ul"><span><i class="fa fa-fw fa-wrench"></i> <span>统计</span></span><i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="statistics-ul" class="collapse" th:classappend="${#strings.startsWith(relativePath,'/statistics')} ? 'in'">
+                    <li th:class="${#strings.startsWith(relativePath,'/statistics/channel')} ? 'active'">
+                        <a th:href="@{/statistics/channel}"><i class="fa fa-fw fa-circle-o"></i> <span>渠道统计</span></a>
+                    </li>
+                    <li th:class="${#strings.startsWith(relativePath,'/statistics/day')} ? 'active'">
+                        <a th:href="@{/statistics/day}"><i class="fa fa-fw fa-circle-o"></i> <span>时间统计</span></a>
+                    </li>
+                </ul>
+            </li>
+
+             <li sec:authorize="hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)" th:class="${#strings.startsWith(relativePath,'/users')} ? 'active'">
+                <a th:href="@{/users}"><i class="fa fa-fw fa-user"></i> <sapn th:text="#{system.users.manage}"></sapn></a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>

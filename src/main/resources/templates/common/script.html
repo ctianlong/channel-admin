@@ -1,0 +1,133 @@
+<!-- jQuery -->
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<!-- bootstrap　-->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
+<!-- artDialog -->
+<script src="https://cdn.bootcss.com/artDialog/7.0.0/dialog.js"></script>
+<!-- jquery.serializejson -->
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+<!-- jquery validation -->
+<script src="https://cdn.bootcss.com/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+<!-- dataTables -->
+<script src="https://cdn.bootcss.com/datatables/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.bootcss.com/datatables/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<!-- select2 -->
+<script src="https://cdn.bootcss.com/select2/4.0.4/js/select2.min.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.4/js/i18n/zh-CN.js"></script>
+<!-- nprogress -->
+<script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.22.1/moment.min.js"></script>
+<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+<!-- span.js 修改版，加遮罩 -->
+<script th:src="@{/js/jquery.spin.merge.js}"></script>
+<!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!-- i18n control -->
+<script th:if="#{system.lang.code} == 'zh_CN' or #{system.lang.code} == null" th:src="@{/js/i18n/messages_zh_CN.js}"></script>
+<script th:if="#{system.lang.code} == 'zh_CN' or #{system.lang.code} == null" src="https://cdn.bootcss.com/jquery-validate/1.14.0/localization/messages_zh.min.js"></script>
+<script th:if="#{system.lang.code} == 'en_US'" th:src="@{/js/i18n/messages_en_US.js}"></script>
+<script sec:authorize="isAuthenticated()" th:inline="javascript">
+/*<![CDATA[*/
+	var loginUserId = /*[[${#authentication.principal.id}]]*/ '';
+	var isSuperuser = /*[[${#authorization.expression('hasRole(T(tk.mybatis.springboot.security.RoleConstants).ADMIN)')}]]*/ false;
+/*]]>*/
+</script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    var ctxPath = /*[[${#httpServletRequest.getContextPath()}]]*/ '';
+/*]]>*/
+</script>
+<script>
+	$(function () {
+		$('input').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue'
+		    //increaseArea: '20%' // optional
+		});
+		$("#link-logout").click(function(){
+			NProgress.start();
+			$.ajax({
+                url:ctxPath+"/api/common/user/logout",
+                type:"post",
+                success:function (data, textStatus, jqXHR) {
+                	NProgress.done();
+                    $(location).prop("href",ctxPath+"/login");
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                	NProgress.done();
+                	$(location).prop("href",ctxPath+"/login");
+                }
+            });
+		});
+	});
+	$.ajaxSetup({headers:{'X-CSRF-TOKEN':$("#csrf_token").attr("content")}});
+	// 用户名正则验证
+	jQuery.validator.addMethod("usernameRegex", function(value, element, param) {
+	    var reg = /^[_A-Za-z][_A-Za-z0-9]*$/;
+	    return this.optional(element) || (reg.test(value));
+	}, iMsg.usernameRegFailMsg);
+	// 首尾不含空格验证
+	jQuery.validator.addMethod("notFirstLastSpace", function(value, element, param) {
+	    var reg = /(^\S.*\S$)|(^\S$)/;
+	    return this.optional(element) || (reg.test(value));
+	}, iMsg.notFirLasSpaceMsg);
+	// 材料成本验证  0.1~0.2 或 1
+	jQuery.validator.addMethod("costRule", function(value, element, param) {
+		if(this.optional(element)) return true;
+	    var reg = /^(0|([1-9]\d*))(\.\d+)?(~(0|([1-9]\d*))(\.\d+)?)?$/; // 非负整数或小数，且头部不能有多余的0，可匹配单个数，也可用~分割的区间
+	    if(reg.test(value)){
+	    	if(value.indexOf("~")!=-1){
+		    	var nums=value.split("~");
+		    	if(nums[0]<=nums[1]) return true;
+	    	}else{
+	    		return true;
+	    	}
+	    }
+	    return false;
+	}, iMsg.formatSizeErr);
+	// 非负，整数、小数、科学计数法
+	jQuery.validator.addMethod("scientificNotation", function(value, element, param) {
+        var reg = /^(0|([1-9]\d*))(\.\d+)?([Ee]{1}([+-]?\d+))?$/;
+        return this.optional(element) || (reg.test(value));
+    }, iMsg.formatSizeErr);
+	// 四位数年份 [1900,2100)
+	jQuery.validator.addMethod("collectTimeYear", function(value, element, param) {
+        var reg = /^((19)|(20))\d\d$/;
+        return this.optional(element) || (reg.test(value));
+    }, iMsg.correctYear);
+	// 分数
+	jQuery.validator.addMethod("fraction", function(value, element, param) {
+        var reg = /^[1-9]\d*\/[1-9]\d*$/;
+        return this.optional(element) || (reg.test(value));
+    }, iMsg.formatSizeErr);
+	// 数字大于0
+	jQuery.validator.addMethod("greaterThanZero", function(value, element, param) {
+        var v=Number(value);
+        return this.optional(element) || (!isNaN(v) && v>0);
+    }, iMsg.formatSizeErr);
+	NProgress.configure({
+		minimum: 0.2,
+		showSpinner: false
+	});
+	function changeLanguage(language){
+		$.ajax({
+		    type: "POST",
+		    url: ctxPath + "/api/common/changelanguage",
+		    data: {lang:language},
+		    error: function(data, error) {
+		    	//alert("change language error!");
+		        window.location.reload();
+		    },
+		    success: function(data){
+		        window.location.reload();
+		    }
+		});
+	}
+</script>

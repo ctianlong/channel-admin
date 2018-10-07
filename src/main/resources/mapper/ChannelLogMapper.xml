@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.springboot.mapper.ChannelLogMapper" >
+
+    <!-- 方便，直接使用联结 -->
+  <select id="listByQuery" resultType="ChannelLog">
+    SELECT c1.id,c1.channelId,c1.channelName,c1.payType,c1.price,c1.parentId,c1.day,c1.click,c1.display,c1.activity,c1.createTime,c1.updateTime,c2.channelName AS parentChannelName,
+      CASE c1.payType
+      WHEN 0 THEN c1.display/1000*c1.price
+      WHEN 1 THEN c1.click*c1.price
+      WHEN 2 THEN c1.activity*c1.price
+      ELSE 0 END AS consume
+    FROM channellog c1
+    LEFT OUTER JOIN channel c2 ON c1.parentId = c2.id
+    <where>
+        <if test="channelId != null">
+            c1.channelId = #{channelId}
+        </if>
+        <if test="startDay != null">
+            <![CDATA[
+            AND c1.day >= #{startDay}
+            ]]>
+        </if>
+        <if test="endDay != null">
+            <![CDATA[
+            AND c1.day <= #{endDay}
+            ]]>
+        </if>
+    </where>
+  </select>
+
+  <select id="sumTotal" resultType="hashmap">
+  SELECT SUM(display) AS totalDisplay,SUM(click) AS totalClick,
+    SUM(CASE payType
+        WHEN 0 THEN display/1000*price
+        WHEN 1 THEN click*price
+        WHEN 2 THEN activity*price
+        ELSE 0 END
+    ) AS totalConsume
+  FROM channellog
+  </select>
+    
+    <select id="statisticsByDay" resultType="DayStatLog">
+        SELECT day,SUM(activity) AS totalActivity,SUM(display) AS totalDisplay,SUM(click) AS totalClick,
+            SUM(CASE payType
+                WHEN 0 THEN display/1000*price
+                WHEN 1 THEN click*price
+                WHEN 2 THEN activity*price
+                ELSE 0 END
+            ) AS totalConsume
+        FROM channellog
+        <where>
+            <if test="channelId != null">
+                channelId = #{channelId}
+            </if>
+            <if test="startDay != null">
+                <![CDATA[
+            AND day >= #{startDay}
+            ]]>
+            </if>
+            <if test="endDay != null">
+                <![CDATA[
+            AND day <= #{endDay}
+            ]]>
+            </if>
+        </where>
+        GROUP BY day
+        <!--<trim prefix="HAVING" prefixOverrides="AND ">
+            <if test="startDay != null">
+                <![CDATA[
+                day >= #{startDay}
+                ]]>
+            </if>
+            <if test="endDay != null">
+                <![CDATA[
+                AND day <= #{endDay}
+                ]]>
+            </if>
+        </trim>-->
+    </select>
+    
+    <select id="statisticsByChannel" resultType="ChannelStatLog">
+        select c1.totalActivity,c1.totalDisplay,c1.totalClick,c1.totalConsume,c2.channelName,c2.price,c2.payType,c3.channelName as parentChannelName
+        from
+            (select channelId,SUM(activity) AS totalActivity,SUM(display) AS totalDisplay,SUM(click) AS totalClick,
+                SUM(CASE payType
+                WHEN 0 THEN display/1000*price
+                WHEN 1 THEN click*price
+                WHEN 2 THEN activity*price
+                ELSE 0 END
+                ) AS totalConsume
+            from channellog
+            <where>
+                <if test="channelId != null">
+                    channelId = #{channelId}
+                </if>
+                <if test="channelName != null and channelName != ''">
+                    AND channelName like #{channelName}
+                </if>
+            </where>
+            group by channelId) as c1
+        left outer join channel c2 on c1.channelId = c2.id
+        left outer join channel c3 on c2.parentId = c3.id
+    </select>
+
+</mapper>
+  

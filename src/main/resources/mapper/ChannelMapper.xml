@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.springboot.mapper.ChannelMapper" >
+
+    <!-- 方便，直接使用联结 -->
+  <select id="listByQuery" resultType="Channel">
+    SELECT c1.id,c1.channelName,c1.payType,c1.price,c1.parentId,c1.createTime,c1.updateTime,c2.channelName AS parentChannelName
+    FROM channel c1
+    LEFT OUTER JOIN channel c2 ON c1.parentId = c2.id
+    <where>
+        <if test="channelName != null and channelName != ''">
+          c1.channelName like #{channelName}
+        </if>
+        <if test="parent == true">
+          AND c1.parentId = 0
+        </if>
+        <if test="parent == false">
+          AND c1.parentId != 0
+        </if>
+    </where>
+  </select>
+
+    <insert id="addOne">
+        insert into channel
+        (channelName,payType,price,parentId,createTime,updateTime)
+        values (#{channelName},#{payType},#{price},#{parentId},#{createTime},#{updateTime});
+    </insert>
+    
+    <update id="updateById">
+        UPDATE channel
+        SET
+          channelName = #{channelName},
+          payType = #{payType},
+          price = #{price},
+          parentId = #{parentId},
+          updateTime = #{updateTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteOne">
+        delete from channel where id = #{id}
+    </delete>
+
+    <select id="countByParentId" resultType="_int">
+        SELECT count(0) FROM channel WHERE parentId = #{id}
+    </select>
+  
+</mapper>
+  

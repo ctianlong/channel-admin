@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.springboot.mapper.AccountUserMapper" >
+  <resultMap id="BaseResultMap" type="AccountUser" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="chname" property="chname" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="is_superuser" property="superuser" jdbcType="BIT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- 根据用户名查询用户认证权限信息 -->
+  <select id="listByUsernameOnLogin" parameterType="string" resultMap="BaseResultMap">
+	  SELECT
+	  id, password, username, chname, is_superuser
+	  FROM account_user
+	  WHERE BINARY username = #{_parameter}
+  </select>
+  
+  <!-- 查询所有用户展示信息 -->
+  <select id="listAllWithBaseInfo" resultMap="BaseResultMap">
+    SELECT
+    id, username, chname, phone, company, address, is_superuser, gmt_create
+    FROM account_user
+    <where>
+	    <if test="username != null and username != ''">
+	         username like BINARY #{username}
+	    </if> 
+	    <if test="chname != null and chname != ''">
+	        AND chname like BINARY #{chname}
+	    </if>
+	    <if test="superuser != null">
+	        AND is_superuser = #{superuser,jdbcType=BIT}
+	    </if>
+    </where>
+  </select>
+  
+  <select id="countByUsername" parameterType="string" resultType="_int">
+    SELECT count(*) FROM account_user WHERE BINARY username = #{_parameter}
+  </select>
+  
+  <select id="getIdsByUsername" parameterType="string" resultType="int">
+    SELECT id FROM account_user WHERE BINARY username = #{_parameter}
+  </select>
+  
+  <delete id="deleteOneById" parameterType="int">
+    delete from account_user where id = #{_parameter}
+  </delete>
+
+  <!-- 根据ID查询用户个人信息 -->
+  <select id="getOneWithUserInfoById" parameterType="int" resultMap="BaseResultMap">
+      SELECT
+      username, chname, phone, company, address
+      FROM account_user
+      WHERE id = #{_parameter}
+  </select>
+  
+  <select id="getPasswordById" parameterType="int" resultType="string">
+    SELECT password FROM account_user WHERE id = #{_parameter}
+  </select>
+  
+  <update id="updatePasswordById">
+    UPDATE account_user SET password = #{password} WHERE id = #{id}
+  </update>
+  
+</mapper>
+  

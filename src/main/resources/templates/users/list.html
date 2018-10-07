@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{system.user.manage}"></title>
+    <div th:replace="common/head"></div>
+    <!-- 用户管理样式 -->    
+    <link th:href="@{/css/myTable.css}" rel="stylesheet"/>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div th:replace="common/navigation"></div>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row page-header-box">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" th:text="#{system.user.manage}"></h1>
+                    </div>
+                </div>
+                <!-- Page Heading -->
+                <div class="panel king-panel1">
+                    <div class="panel-heading king-panel-head1 king-panel-top3" role="tab" id="headingOne">
+                        <div class="king-panel-control">
+				            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="fa fa-minus-square-o fa-lg"></a>
+				        </div>
+                        <h3 class="panel-title" th:text="#{system.query.condition}"></h3>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                	<div class='panel-body'>
+                		<form role="form" id="form-user-query">
+                		    <div class="row">
+                			<div class="col-sm-6 col-md-6 col-lg-4">           
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon" th:text="#{system.permission}"></div>
+                                        <select id="superuserQuery" class="form-control" style="width: 100%">
+	                                        <option></option>
+	                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                			<div class="col-sm-6 col-md-6 col-lg-4">
+							            <div class="form-group">
+							                <div class="input-group">
+							                    <div class="input-group-addon" th:text="#{system.username}"></div>
+							                    <input id="usernameQuery" class="form-control" type="text" th:placeholder="#{system.username}">
+							                </div>
+							            </div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-4">           
+					            <div class="form-group">
+					            	<div class="input-group">
+					                    <div class="input-group-addon" th:text="#{system.fullname}"></div>
+					                	<input id="chnameQuery" type="text" class="form-control" th:placeholder="#{system.fullname}">
+					                </div>
+					            </div>
+                			</div>
+                		    </div>
+                            <div class="row">
+                            <div class="col-lg-12">
+                                <hr class="mt5 mb15">
+                                <button type="submit" class="king-btn king-info king-radius"><i class="fa fa-search"></i> <span th:text="#{system.query}"></span></button> 
+                                <button type="button" class="king-btn king-success king-radius" id="btn-reset-refresh"><i class="fa fa-refresh"></i> <span th:text="#{system.refresh}"></span></button>
+                                <button type="button" class="king-btn king-radius king-warning" id="btn-add"><i class="fa fa-plus"></i> <span th:text="#{system.add}"></span></button>
+                            </div>
+                            </div>
+                			</form>
+                	</div>
+                	</div>
+                </div>
+                <!---->
+                <div class="panel king-panel1">
+                	<div class="panel-heading king-panel-head1 king-panel-top3" role="tab" id="headingTwo">
+	               	    <div class="king-panel-control">
+				            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" class="fa fa-minus-square-o fa-lg"></a>
+				        </div>
+				        <h3 class="panel-title" th:text="#{system.user.list}"></h3>
+                	</div>
+                	<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                	<div class='panel-body'>
+                        <div id="div-table-container" class="table-responsive">
+                            <table id="table-user" class="table table-bordered table-hover table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th><span th:text="#{system.username}"></span></th>
+                                        <th><span th:text="#{system.fullname}"></span></th>
+                                        <th><span th:text="#{system.phone}"></span></th>
+                                        <th><span th:text="#{system.company}"></span></th>
+                                        <th><span th:text="#{system.address}"></span></th>
+                                        <th><span th:text="#{system.permission}"></span></th>
+                                        <th><span th:text="#{system.register.time}"></span></th>
+                                        <th><span th:text="#{system.operation}"></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                	</div>
+                	</div>
+                </div>
+                
+                
+                <!-- 用户modal -->
+	            <div class="modal fade" data-backdrop="static" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	              <div class="modal-dialog" role="document">
+	                <div class="modal-content" style="border-radius:5px;">
+	                  <div class="modal-header">
+	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                      <span aria-hidden="true">&times;</span></button>
+	                    <h4 class="modal-title" id="myModalLabel"></h4>
+	                  </div>
+	                  <form id="form-user" class="form-horizontal">
+	                  <div class="modal-body">
+	                    <div class="row">
+	                        <div class="col-md-12">
+	                                <input type="hidden" name="id" id="id"/>
+	                                <div class="form-group">
+	                                    <label class="col-md-3 control-label" th:title="#{system.required}"><span class="king-required-tip text-danger mr5">*</span><span th:text="#{system.username}"></span>：</label>
+	                                    <div class="col-md-6">
+	                                        <input type="text" name="username" class="form-control" id="username" th:placeholder="#{system.username}"/>
+	                                        
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="col-md-3 control-label" th:title="#{system.required}"><span class="king-required-tip text-danger mr5">*</span><span th:text="#{system.fullname}"></span>：</label>
+	                                    <div class="col-md-6">
+	                                       <input type="text" name="chname" class="form-control" id="chname" th:placeholder="#{system.fullname}"/>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="col-md-3 control-label"><span th:text="#{system.phone}"></span>：</label>
+	                                    <div class="col-md-6">
+	                                       <input type="text" name="phone" class="form-control" id="phone" th:placeholder="#{system.telephone}"/>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="col-md-3 control-label"><span th:text="#{system.company}"></span>：</label>
+	                                    <div class="col-md-6">
+	                                       <input type="text" name="company" class="form-control" id="company" th:placeholder="#{system.company}"/>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="col-md-3 control-label"><span th:text="#{system.address}"></span>：</label>
+	                                    <div class="col-md-6">
+	                                       <input type="text" name="address" class="form-control" id="address" th:placeholder="#{system.address}"/>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="col-md-3 control-label" th:title="#{system.required}"><span class="king-required-tip text-danger mr5">*</span><span th:text="#{system.permission}"></span>：</label>
+	                                    <div class="col-md-6 mt5">
+										  <label class="mr5"><input type="radio" name="superuser" id="superuser-true" value="true"> <span th:text="#{system.superuser}"></span></label>
+										  <label class="mr5"><input type="radio" name="superuser" id="superuser-false" value="false"> <span th:text="#{system.normal}"></span></label>
+	                                    </div>
+	                                </div>
+	                        </div>
+	                    </div>
+	                  </div>
+	                  <div class="modal-footer">
+	                    <button type="submit" class="king-btn king-radius king-primary"><span th:text="#{system.save}"></span></button>
+	                    <button type="button" class="king-btn king-radius king-default" data-dismiss="modal"><span th:text="#{system.cancel}"></span></button>
+	                  </div>
+	                  </form>
+	                </div>
+	                <!-- /.modal-content -->
+	              </div>
+	              <!-- /.modal-dialog -->
+	            </div>
+	            <!-- /.modal -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <div th:replace="common/script"></div>
+    
+    <!-- 用户管理js -->
+    <script th:src="@{/js/constant.js}"></script>
+    <script th:src="@{/js/user-manage.js}"></script>
+</body>
+
+</html>

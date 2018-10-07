@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>时间统计</title>
+    <div th:replace="common/head"></div>
+    <link th:href="@{/css/myTable.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div id="wrapper">
+    <div th:replace="common/navigation"></div>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-header-box">
+                <div class="col-lg-12">
+                    <h1 class="page-header">时间统计</h1>
+                </div>
+            </div>
+            <!-- Page Heading -->
+            <div class="panel king-panel1">
+                <div class="panel-heading king-panel-head1 king-panel-top3" role="tab" id="headingOne">
+                    <div class="king-panel-control">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="fa fa-minus-square-o fa-lg"></a>
+                    </div>
+                    <h3 class="panel-title" th:text="#{system.query.condition}"></h3>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class='panel-body'>
+                        <form role="form" id="form-day-query">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="input-daterange input-group" id="datepicker">
+                                            <div class="input-group-addon">日期</div>
+                                            <input type="text" class="form-control" id="startDay" />
+                                            <span class="input-group-addon">至</span>
+                                            <input type="text" class="form-control" id="endDay" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <hr class="mt5 mb15">
+                                    <button type="submit" class="king-btn king-info king-radius"><i class="fa fa-search"></i> <span th:text="#{system.query}"></span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel king-panel1">
+                <div class="panel-heading king-panel-head1 king-panel-top3" role="tab" id="headingTwo">
+                    <div class="king-panel-control">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" class="fa fa-minus-square-o fa-lg"></a>
+                    </div>
+                    <h3 class="panel-title">每日汇总推广列表</h3>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class='panel-body'>
+                        <div id="div-table-container" class="table-responsive">
+                            <table id="table-day" class="table table-bordered table-hover table-striped table-condensed">
+                                <thead>
+                                <tr>
+                                    <th><span>日期</span></th>
+                                    <th><span>总报名数</span></th>
+                                    <th><span>总展示数</span></th>
+                                    <th><span>总点击数</span></th>
+                                    <th><span>总消费金额</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<div th:replace="common/script"></div>
+
+<script th:src="@{/js/constant.js}"></script>
+<script th:src="@{/js/day.js}"></script>
+</body>
+
+</html>
