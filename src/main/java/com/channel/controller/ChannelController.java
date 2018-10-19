@@ -1,7 +1,9 @@
 package com.channel.controller;
 
+import com.channel.mapper.ChannelLogMapper;
 import com.channel.mapper.ChannelMapper;
 import com.channel.model.Channel;
+import com.channel.model.ChannelLog;
 import com.channel.service.query.ChannelQuery;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,10 +30,27 @@ public class ChannelController {
 
     // 直接mapper层，简化
     private final ChannelMapper channelMapper;
+    private final ChannelLogMapper channelLogMapper;
 
     @Autowired
-    public ChannelController(ChannelMapper channelMapper) {
+    public ChannelController(ChannelMapper channelMapper, ChannelLogMapper channelLogMapper) {
         this.channelMapper = channelMapper;
+        this.channelLogMapper = channelLogMapper;
+    }
+
+    @PutMapping("/log/update")
+    public ResponseEntity<Void> updateChannelLog(@RequestBody ChannelLog log) {
+        log.setUpdateTime(System.currentTimeMillis());
+        try {
+            if (channelLogMapper.updateStatisticsById(log) != 1) {
+                logger.error("update channellog fail, id:{}", log.getId());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (Exception e) {
+            logger.error("update channellog fail, id:{}", log.getId(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/list")

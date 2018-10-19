@@ -82,6 +82,7 @@
                                         <th><span>消费金额</span></th>
                                         <th><span>单价</span></th>
                                         <th><span>付费方式</span></th>
+                                        <th><span>操作</span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -119,6 +120,67 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" data-backdrop="static" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="border-radius:5px;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel"></h4>
+                            </div>
+                            <form id="form-channellog" class="form-horizontal">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="id" id="id"/>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"><span>渠道</span>：</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static" id="channelName"></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"><span>日期</span>：</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static" id="day"></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"><span>付费方式</span>：</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static" id="payType"></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"><span>报名数</span>：</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="activity" class="form-control" id="activity"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"><span>展示数</span>：</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="display" class="form-control" id="display"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"><span>点击数</span>：</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="click" class="form-control" id="click"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="king-btn king-radius king-primary"><span>保存</span></button>
+                                    <button type="button" class="king-btn king-radius king-default" data-dismiss="modal"><span>取消</span></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -21,4 +21,6 @@ public interface ChannelLogMapper {
     List<DayStatLog> statisticsByDay(ChannelLogQuery query);
 
     List<ChannelStatLog> statisticsByChannel(ChannelLogQuery query);
+
+    int updateStatisticsById(ChannelLog log);
 }

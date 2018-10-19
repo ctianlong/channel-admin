@@ -111,6 +111,55 @@ $(function(){
         return param;
     }
 
+    function editItemInit(item) {
+        if (!item) {
+            return;
+        }
+        $("#myModalLabel").text('编辑');
+        validator.resetForm();
+        $("#form-channellog")[0].reset();
+        $("#id").val(item.id);
+        $("#channelName").text(item.channelName);
+        $("#day").text(moment(item.day, "YYYYMMDD").format("YYYY-MM-DD"));
+        $("#payType").text(item.payType === 0 ? "cpm" : (item.payType === 1 ? "cpc" : "cpa"));
+        $("#activity").val(item.activity);
+        $("#display").val(item.display);
+        $("#click").val(item.click);
+        $("#modal-default").modal("show");
+    }
+
+    function editItemSubmit() {
+        var data=$("#form-channellog").serializeJSON();
+        console.log(data);
+        $.ajax({
+            url:ctxPath+"/api/channel/log/update",
+            type:"put",
+            contentType:"application/json;charset=utf-8",
+            data: JSON.stringify(data),
+            success:function (result, textStatus, jqXHR) {
+                $("#modal-default").modal("hide");
+                var d = dialog({
+                    content:'<div class="king-notice-box king-notice-success"><p class="king-notice-text">修改成功</p></div>'
+                });
+                d.show();
+                setTimeout(function() {
+                    d.close().remove();
+                    _table.draw(false);
+                }, 1500);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                var d = dialog({
+                    content:'<div class="king-notice-box king-notice-fail"><p class="king-notice-text">修改失败</p></div>',
+                    zIndex:2048
+                });
+                d.show();
+                setTimeout(function() {
+                    d.close().remove();
+                }, 1500);
+            }
+        });
+    }
+
     var $wrapper = $("#div-table-container");
     var $table = $("#table-datacenter");
     var _table = $table.dataTable($.extend(true,{},CONSTANT.DATA_TABLES.DEFAULT_OPTION, {
@@ -203,13 +252,31 @@ $(function(){
                     if (data === 2) return "cpa";
                     return "";
                 }
+            },
+            {
+                className : "ellipsis",
+                data: null,
+                defaultContent:"",
+                orderable : false
             }
         ],
         "createdRow": function (row, data, index ) {
+            if (isSuperuser) {
+                var $btnEdit = $('<a class="king-btn king-info king-radius king-btn-mini btn-edit"><i class="fa fa-edit btn-icon"></i> 编辑</a>');
+                $('td', row).eq(9).append($btnEdit);
+            }
         },
         "drawCallback": function( settings ) {
+            if (!isSuperuser) {
+                _table.column(9).visible(false);
+            }
         }
     })).api();
+
+    $table.on("click",".btn-edit",function() {
+        var item = _table.row($(this).closest('tr')).data();
+        editItemInit(item);
+    });
 
     // 具体字段查询
     $("#form-datacenter-query").submit(function(){
@@ -367,6 +434,32 @@ $(function(){
     //行点击事件
     $("tbody",$table2).on("click","tr",function(event) {
         $(this).addClass("info").siblings().removeClass("info");
+    });
+
+    var validator = $("#form-channellog").validate({
+        errorClass: 'text-danger',
+        rules:{
+            activity:{
+                digits:true,
+                min:0
+            },
+            display:{
+                digits:true,
+                min:0
+            },
+            click:{
+                digits:true,
+                min:0
+            }
+        },
+        messages:{
+        },
+        submitHandler:function(form){
+            if($("#id").val()){
+                editItemSubmit();
+            }
+        },
+        onkeyup:false
     });
 
 });
